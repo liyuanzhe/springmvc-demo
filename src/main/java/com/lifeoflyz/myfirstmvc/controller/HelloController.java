@@ -1,6 +1,8 @@
 package com.lifeoflyz.myfirstmvc.controller;
 
 import com.lifeoflyz.myfirstmvc.model.User;
+import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +16,9 @@ import java.util.Arrays;
 
 @Controller
 public class HelloController {
+
+    @Autowired
+    UserServiceImpl userService;
 
     @RequestMapping(value="ping")
     @ResponseBody   // 表明return的值将放入ResponseBody中
@@ -48,5 +53,12 @@ public class HelloController {
     @ResponseBody
     public String list(User user){
         return "user " + user.toString();
+    }
+
+    @RequestMapping(value="searchByName")
+    @ResponseBody
+    public String list(String name ){
+        userService.searchUser(name);
+        return "user " + userService.searchUser(name);
     }
 }
