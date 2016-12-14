@@ -1,6 +1,6 @@
 package com.lifeoflyz.myfirstmvc.controller;
 
-import com.lifeoflyz.myfirstmvc.model.User;
+import com.lifeoflyz.myfirstmvc.model.MyUser;
 import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,7 @@ public class HelloController {
     // http://localhost:8181/object?name=liyuanzhe&age=10
     @RequestMapping(value="object")
     @ResponseBody
-    public String object(User user){
+    public String object(MyUser user){
         return "user " + user.toString();
     }
 
@@ -51,7 +51,7 @@ public class HelloController {
     // list只能包在对象里面，将list直接作为参数将无法传入
     @RequestMapping(value="list")
     @ResponseBody
-    public String list(User user){
+    public String list(MyUser user){
         return "user " + user.toString();
     }
 

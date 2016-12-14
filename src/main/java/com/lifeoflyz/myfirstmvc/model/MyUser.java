@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by liyuanzhe on 16-12-12.
  */
-public class User {
+public class MyUser {
 
     private String name;
     private Integer age;

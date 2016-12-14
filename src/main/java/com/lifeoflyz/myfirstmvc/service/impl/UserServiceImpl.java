@@ -16,14 +16,15 @@ public class UserServiceImpl {
 
     public String searchUser(String name){
 
-//        UserExample userExample = new UserExample();
-//        userExample.or().andNameEqualTo(name);
-//        String result = userMapper.selectByExample(userExample).get(0).getName();
-//        System.out.println(result);
+        UserExample userExample = new UserExample();
+        userExample.or().andNameEqualTo(name);
 
-//        return result;
+        userMapper.selectByExample(userExample);
+        String result = userMapper.selectByExample(userExample).get(0).getName();
+        System.out.println(result);
 
-        return "over";
+        return result;
+
     }
 
 }
