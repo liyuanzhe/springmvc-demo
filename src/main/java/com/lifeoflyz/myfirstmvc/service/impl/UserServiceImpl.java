@@ -21,7 +21,6 @@ public class UserServiceImpl {
 
         userMapper.selectByExample(userExample);
         String result = userMapper.selectByExample(userExample).get(0).getName();
-        System.out.println(result);
 
         return result;
 

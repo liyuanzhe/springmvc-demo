@@ -14,7 +14,7 @@
 
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>/WEB-INF/config/springmvc-config.xml</param-value>
+      <param-value>classpath:springmvc-config.xml</param-value>
     </init-param>
     <load-on-sartup>1</load-on-sartup>
   </servlet>
