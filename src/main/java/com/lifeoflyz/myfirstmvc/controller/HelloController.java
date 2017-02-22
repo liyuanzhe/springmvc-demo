@@ -1,5 +1,6 @@
 package com.lifeoflyz.myfirstmvc.controller;
 
+import com.google.gson.Gson;
 import com.lifeoflyz.myfirstmvc.model.MyUser;
 import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by liyuanzhe on 16-12-11.
@@ -20,10 +23,14 @@ public class HelloController {
     @Autowired
     UserServiceImpl userService;
 
+    private Gson gson = new Gson();
+
     @RequestMapping(value="ping")
     @ResponseBody   // 表明return的值将放入ResponseBody中
     public String ping(){
-        return "pong";
+        Map<String, String> myMap = new HashMap();
+        myMap.put("data","hello");
+        return gson.toJson(myMap);
     }
 
     @RequestMapping(value="baseType")
