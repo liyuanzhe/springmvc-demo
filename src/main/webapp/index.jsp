@@ -20,7 +20,7 @@ $(document).ready(function(){
     <script>
         $(document).ready(function(){
           $("button").click(function(){
-            $.get("/ping",function(data,status){
+            $.get("/myfirstweb/ping",function(data,status){
               alert("data：" + data + "\n status：" + status);
             });
           });
