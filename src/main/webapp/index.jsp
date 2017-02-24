@@ -6,11 +6,11 @@
     <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery
 /jquery-1.4.min.js"></script>
     <script>
-$(document).ready(function(){
-  $("p").click(function(){
-  $(this).hide();
-  });
-});
+    $(document).ready(function(){
+        $("p").click(function(){
+            $(this).hide();
+        });
+    });
 </script>
 </head>
 
@@ -29,7 +29,7 @@ $(document).ready(function(){
 </head>
 <body>
 
-<button>send http</button>
+    <button>send http</button>
 
 </body>
 </html>
