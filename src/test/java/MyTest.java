@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,23 +17,28 @@ import java.util.Map;
 @RunWith(SpringJUnit4ClassRunner.class)     //表示继承了SpringJUnit4ClassRunner类
 @ContextConfiguration(locations = { "classpath:springmvc-config.xml" })
 public class MyTest {
-
-    @Autowired
-    UserServiceImpl userService;
-
-    private Gson gson = new Gson();
+//
+//    @Autowired
+//    UserServiceImpl userService;
+//
+//    private Gson gson = new Gson();
+//
+//    @Ignore
+//    public void myTest(){
+//
+//        String name = userService.searchUser("liyuanzhe");
+//        System.out.println(name);
+//    }
+//
+//    @Ignore
+//    public void testJson(){
+//        Map<String, String> myMap = new HashMap();
+//        myMap.put("data","hello");
+//        System.out.println(gson.toJson(myMap));
+//    }
 
     @Test
-    public void myTest(){
-
-        String name = userService.searchUser("liyuanzhe");
-        System.out.println(name);
-    }
-
-    @Test
-    public void testJson(){
-        Map<String, String> myMap = new HashMap();
-        myMap.put("data","hello");
-        System.out.println(gson.toJson(myMap));
+    public void test(){
+        System.out.println("test");
     }
 }

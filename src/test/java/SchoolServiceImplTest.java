@@ -3,6 +3,8 @@ import com.lifeoflyz.myfirstmvc.model.gen.School;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolExample;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolMapper;
 import com.lifeoflyz.myfirstmvc.service.impl.SchoolServiceImpl;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class SchoolServiceImplTest {
     SchoolMapper schoolMapper;
 
     private Gson gson = new Gson();
-    @Test
+    @Ignore
     public void testInsert(){
         School school = new School();
         school.setName("机械与动力工程学院");
@@ -31,12 +33,16 @@ public class SchoolServiceImplTest {
         schoolService.insertSchool(school);
     }
 
-    @Test
+    @Ignore
     public void getSchool(){
         SchoolExample schoolExample = new SchoolExample();
         schoolExample.or().andIdIsNotNull();
         System.out.println(
             gson.toJson(schoolMapper.selectByExample(schoolExample))
         );
+    }
+    @Test
+    public void test(){
+        System.out.println();
     }
 }
