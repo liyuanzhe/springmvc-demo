@@ -8,7 +8,7 @@
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/mydemo"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/db_teacher_judge"
                         userId="root"
                         password="111">
         </jdbcConnection>
@@ -33,12 +33,15 @@
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
-        <table schema="DB2ADMIN" tableName="tb_user" domainObjectName="User" >
+        <table schema="DB2ADMIN" tableName="tb_school" domainObjectName="School" >
             <!--<property name="useActualColumnNames" value="true"/>-->
             <generatedKey column="id" sqlStatement="JDBC" identity="true" />
             <!--<columnOverride column="DATE_FIELD" property="startDate" />-->
             <!--<ignoreColumn column="FRED" />-->
             <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" />-->
+        </table>
+        <table schema="DB2ADMIN" tableName="tb_department" domainObjectName="Department" >
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
         </table>
 
     </context>

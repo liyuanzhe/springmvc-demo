@@ -2,6 +2,7 @@ package com.lifeoflyz.myfirstmvc.controller;
 
 import com.google.gson.Gson;
 import com.lifeoflyz.myfirstmvc.model.MyUser;
+import com.lifeoflyz.myfirstmvc.model.Table;
 import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by liyuanzhe on 16-12-11.
@@ -70,9 +69,13 @@ public class HelloController {
         return "user " + userService.searchUser(name);
     }
 
-    @RequestMapping(value="testPost", method = RequestMethod.POST)
+    @RequestMapping(value="table" ,produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String testPost(){
-        return "a post";
+    public String table(){
+        List<Table> tableList = new LinkedList();
+        tableList.add(new Table(1, "张三"));
+        tableList.add(new Table(2, "李四"));
+        tableList.add(new Table(3, "王五"));
+        return gson.toJson(tableList);
     }
 }
