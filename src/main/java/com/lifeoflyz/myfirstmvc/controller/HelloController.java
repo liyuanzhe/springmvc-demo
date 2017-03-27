@@ -25,7 +25,7 @@ public class HelloController {
 
     private Gson gson = new Gson();
 
-    @RequestMapping(value = "ping")
+    @RequestMapping(value = "ping.do")
     @ResponseBody   // 表明return的值将放入ResponseBody中
     public String ping() {
         Map<String, String> myMap = new HashMap();

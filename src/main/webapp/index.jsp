@@ -106,14 +106,16 @@
 
       var loadSchool = function(){
           var list = $("#schoollist");
-          for(var i=0; i<schoolList.length; i++){
-            var school = schoolList[i];
-            if(i == 0){
-              list.append("<a class='list-group-item active' onclick='clickschool(this)'>" + school.short+ "</a>");
-            }else{
-              list.append("<a class='list-group-item' onclick='clickschool(this)'>" + school.short+ "</a>");
-            }
-          }
+          $.get("school/all.do", function(data, status){
+            for(var i=0; i<data.length; i++){
+                var school = data[i];
+                if(i == 0){
+                  list.append("<a class='list-group-item active' onclick='clickschool(this)'>" + school.shortName+ "</a>");
+                }else{
+                  list.append("<a class='list-group-item' onclick='clickschool(this)'>" + school.shortName+ "</a>");
+                }
+              }
+          });
       }
 
       // 点击学院事件
