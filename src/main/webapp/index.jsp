@@ -30,7 +30,9 @@ $(document).ready(function(){
 <body>
 
 <button>send http</button>
-
+<div>
+<img src="static/img/timg.jpg"/>
+</div>
 </body>
 </html>
 </html>
