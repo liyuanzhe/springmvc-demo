@@ -33,10 +33,10 @@ public class HelloController {
         return gson.toJson(myMap);
     }
 
-    @RequestMapping(value = "baseType")
+    @RequestMapping(value = "baseType.do")
     @ResponseBody
     // defaultValue的用处：当参数不传时的默认值
-    public String baseType(@RequestParam(value = "age", defaultValue = "15") int age) {
+    public String baseType(@RequestParam(value = "age") int age) {
         return "age " + age;
     }
 

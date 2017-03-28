@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+    <%@ page contentType="text/html;charset=UTF-8" %>
 <!doctype html>
 <html>
   <head>
@@ -17,7 +17,7 @@
       <!-- 导航 -->
       <ul class="nav nav-pills">
         <li role="presentation" class="active"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">学院</a></li>
+        <li role="presentation"><a href="school.jsp">学院</a></li>
         <li role="presentation"><a href="#">系</a></li>
       </ul>
 
@@ -28,7 +28,7 @@
       <div style="float:left;width:85%;padding:10px">
         <div>
           <table class="table table-hover" id="schooltable">
-            <tr><td style="display:none">id</td><td>简称</td><td>全称</td><td>操作</td></tr>
+            <tr><td style="display:none">id</td><td style="hidden:true">学院id</td><td>简称</td><td>全称</td><td>操作</td></tr>
           </table>
         </div>
 
@@ -57,6 +57,10 @@
                                 <label for="name">id</label>
                                   <input type="text" class="form-control text-input" id="id" placeholder="id">
                               </li>
+                              <li hidden="true">
+                                <label for="name">id</label>
+                                <input type="text" class="form-control text-input" id="schoolid" placeholder="schoolid">
+                              </li>
                                 <!-- <li>
                                     <label for="name">性别</label>
                                     <input type="radio" name="sex" id="man" value="男" style="margin-left:10px;"/>男
@@ -67,10 +71,16 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary"  onclick="update()" data-dismiss="modal">保存</button>
+                        <button type="button" class="btn btn-default"  onclick="update()" data-dismiss="modal">修改</button>
+                        <button type="button" class="btn btn-default"  onclick="insert()" data-dismiss="modal">新建</button>
+                        <button type="button" class="btn btn-default"  onclick="deleteDepartment()" data-dismiss="modal">删除</button>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="button" style="padding:10px;">
+            <button class="btn btn-default" onclick="editInfo(null)">新建</button>
         </div>
       </div>
 
@@ -99,8 +109,8 @@
         table.append("<tr><td style='hidden:true'>id</td><td>简称</td><td>全称</td><td>操作</td></tr>");
         for(var i=0; i<departmentList.length; i++){
           var department = departmentList[i];
-          table.append("<tr><td style='hidden:true'>" + department.id + "</td><td>" + department.short + "</td><td>" + department.name + "</td>"
-            + "<td style='color:#f00;cursor:pointer;' onclick='editInfo(this)'>修改</td>");
+          table.append("<tr><td style='hidden:true'>" + department.id + "</td><td>" + department.shortName + "</td><td>" + department.name + "</td>"
+            + "<td style='color:#f00;cursor:pointer;' onclick='editInfo(this)'>详情</td>");
         }
       }
 
@@ -110,34 +120,50 @@
             for(var i=0; i<data.length; i++){
                 var school = data[i];
                 if(i == 0){
-                  list.append("<a class='list-group-item active' onclick='clickschool(this)'>" + school.shortName+ "</a>");
+                  list.append("<a class='list-group-item active' onclick='clickschool(this)'>" + school.shortName+ "<span hidden='true'>" + school.id + "</span>" +"</a>");
                 }else{
-                  list.append("<a class='list-group-item' onclick='clickschool(this)'>" + school.shortName+ "</a>");
+                  list.append("<a class='list-group-item' onclick='clickschool(this)'>" + school.shortName+ "<span hidden='true'>" + school.id + "</span>" + "</a>");
                 }
               }
           });
       }
 
+    var refreshDepartment = function(schoolId){
+        departmentList = $.get("department/getBySchoolId.do?schoolId="+schoolId, function(data, status){
+            departmentList = data;
+            loadDepartment();
+        });
+    }
       // 点击学院事件
       var clickschool = function(obj){
+
+        // 获取焦点
         var item = $(obj);
         $("#schoollist").children().removeClass("active");
         item.addClass("active");
-        loadDepartment();
+
+        // 加载department
+        var schoolId = $(obj).children("span").text();
+        refreshDepartment(schoolId);
+
+        <%--loadDepartment();--%>
       }
 
       //触发模态框的同时调用此方法
       function editInfo(obj) {
           var tds= $(obj).parent().find('td');
-          $('#name').val(tds.eq(2).text());
-          $('#shortname').val(tds.eq(1).text());
-          $('#id').val(tds.eq(0).text());
-          // var sex = $('#sex').val(tds.eq(2).text());
-          // if (sex == '女') {
-          //     document.getElementById('women').checked = true;
-          // } else {
-          //     document.getElementById('man').checked = true;
-          // }
+
+            if(obj == null){
+                $('#name').val("");
+                $('#shortname').val("");
+                $('#id').val("");
+                $('#schoolid').val("");
+            }else{
+              $('#name').val(tds.eq(2).text());
+              $('#shortname').val(tds.eq(1).text());
+              $('#id').val(tds.eq(0).text());
+              $('#schoolid').val(tds.eq(3).text());
+            }
           $('#modal').modal('show');
       }
 
@@ -147,22 +173,43 @@
           var name = $('#name').val();
           var shortname = $('#shortname').val();
           var id = $('#id').val();
+          var department;
           for(var i=0; i<departmentList.length; i++){
             if(departmentList[i].id == id){
               departmentList[i].name = name;
               departmentList[i].shortname = shortname;
+              $.post("department/update.do", departmentList[i], function(data, status){
+                refreshDepartment(departmentList[0].schoolId);
+              });
             }
           };
-          loadDepartment();
           // $('#modal').modal('hide');
       }
 
+    function deleteDepartment(){
+        var id = $('#id').val();
+        $.get("department/delete.do?id="+id, function(data, status){
+            refreshDepartment(departmentList[0].schoolId);
+        });
+    }
+
+    function insert(){
+        //获取模态框数据
+        var name = $('#name').val();
+        var shortname = $('#shortname').val();
+        var schoolId = $(".list-group-item.active").children('span').text();
+        alert(schoolId);
+        $.post("department/insert.do", {name:name, shortName:shortname, schoolId:schoolId}, function(data, status){
+            refreshDepartment(schoolId);
+        });
+    }
+
       $(document).ready(function(){
         loadSchool();
-        loadDepartment();
-        $("button").click(function(){
-          $('#modal').modal('show');
-        });
+        refreshDepartment(1);
+        <%--$("button").click(function(){--%>
+          <%--$('#modal').modal('show');--%>
+        <%--});--%>
       });
     </script>
   </body>

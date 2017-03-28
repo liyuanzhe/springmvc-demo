@@ -24,4 +24,12 @@ public class SchoolServiceImpl {
     public List<School> getSchoolList(){
         return schoolMapper.selectByExample(new SchoolExample());
     }
+
+    public void update(School school){
+        schoolMapper.updateByPrimaryKeySelective(school);
+    }
+
+    public void delete(Integer id){
+        schoolMapper.deleteByPrimaryKey(id);
+    }
 }
