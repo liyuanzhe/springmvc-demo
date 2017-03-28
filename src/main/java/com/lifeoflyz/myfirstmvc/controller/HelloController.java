@@ -3,11 +3,8 @@ package com.lifeoflyz.myfirstmvc.controller;
 import com.google.gson.Gson;
 import com.lifeoflyz.myfirstmvc.model.MyUser;
 import com.lifeoflyz.myfirstmvc.model.Table;
-import com.lifeoflyz.myfirstmvc.service.impl.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,9 +16,6 @@ import java.util.*;
 
 @Controller
 public class HelloController {
-
-    @Autowired
-    UserServiceImpl userService;
 
     private Gson gson = new Gson();
 
@@ -60,13 +54,6 @@ public class HelloController {
     @ResponseBody
     public String list(MyUser user){
         return "user " + user.toString();
-    }
-
-    @RequestMapping(value="searchByName")
-    @ResponseBody
-    public String list(String name ){
-        userService.searchUser(name);
-        return "user " + userService.searchUser(name);
     }
 
     @RequestMapping(value="table" ,produces = "application/json; charset=utf-8")

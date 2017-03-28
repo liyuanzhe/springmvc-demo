@@ -1,6 +1,7 @@
 package com.lifeoflyz.myfirstmvc.controller;
 
 import com.google.gson.Gson;
+
 import com.lifeoflyz.myfirstmvc.model.gen.School;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolMapper;
 import com.lifeoflyz.myfirstmvc.service.impl.SchoolServiceImpl;

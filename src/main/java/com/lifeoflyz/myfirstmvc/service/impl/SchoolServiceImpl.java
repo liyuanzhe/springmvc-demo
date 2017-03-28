@@ -3,6 +3,7 @@ package com.lifeoflyz.myfirstmvc.service.impl;
 import com.lifeoflyz.myfirstmvc.model.gen.School;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolExample;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -16,9 +16,9 @@
 
       <!-- 导航 -->
       <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation" class="active"><a href="admin.jsp">Home</a></li>
         <li role="presentation"><a href="school.jsp">学院</a></li>
-        <li role="presentation"><a href="#">系</a></li>
+        <li role="presentation"><a href="department.jsp">系</a></li>
       </ul>
 
       <div style="float:left;width:15%;padding:10px;">

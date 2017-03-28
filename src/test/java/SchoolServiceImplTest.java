@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+
 import com.lifeoflyz.myfirstmvc.model.gen.School;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolExample;
 import com.lifeoflyz.myfirstmvc.model.gen.SchoolMapper;
