@@ -16,9 +16,9 @@
 
         <!-- 导航 -->
         <ul class="nav nav-pills">
-        <li role="presentation" class="active"><a href="admin.jsp">Home</a></li>
-        <li role="presentation"><a href="school.jsp">学院</a></li>
-        <li role="presentation"><a href="department.jsp">系</a></li>
+            <li role="presentation" class="active"><a href="admin.jsp">Home</a></li>
+            <li role="presentation"><a href="school.jsp">学院</a></li>
+            <li role="presentation"><a href="department.jsp">系</a></li>
         </ul>
 
         <div style="padding:5px;"></div>
@@ -66,16 +66,68 @@
             </div><!-- /.container-fluid -->
         </nav>
 
-        <div>
+        <%-- 教师列表 --%>
+        <div id="teacher-list">
             <table class="table table-hover" id="teachertable">
-                <tr><td style="display:none">id</td><td style="hidden:true">姓名</td><td>职称</td><td>评分</td></tr>
+                <tr><td style="display:none">id</td><td style="hidden:true">姓名</td><td>职称</td><td>评分</td><td>操作</td></tr>
             </table>
         </div>
 
 
-        <div class="button" style="padding:10px;">
-        <button class="btn btn-default" onclick="editTeacher(null)">新建</button>
+        <div class="button" id="edit-teacher-button" style="padding:10px;">
+            <button class="btn btn-default" onclick="editTeacher(null)">新建</button>
         </div>
+
+        <div id="teacher-info-wall" hidden>
+            <div class="panel panel-default">
+                <div class="panel-heading">教师信息</div>
+                <div class="panel-body">
+                    <div class="teacher-info" style="float:left;">
+                        <div style="float:left;padding:10px;overflow:hidden;">
+                            <a><img id="main-pic" width="120" height="150px" src="http://www.cs.sjtu.edu.cn/Management/Upload/[User]7e86b00895014d46bc6219bf3042d262/2013122511125989nUY8y.jpg"></a>
+                        </div>
+                        <div style="padding:10px;float:left;">
+                            <h4>姓名： <span id="teacher-name">李源哲</span></h4>
+                            <p>职称: <span id="teacher-title">教授</span></p>
+                            <p>院系：<span id="teacher-department">电信学院-计算机系</span></p>
+                            <p>主页： <a id="teacher-url" href="http://www.baidu.com">www.baidu.com</a></p>
+                        </div>
+                    </div>
+                    <div class="score" style="padding:10px;">
+                        <p>评分: <span id="teacher-score">7.8</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <%-- 评论列表--%>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <ul class="media-list" id="comment-list">
+                        <li class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object" width="64px" heigth="64px" src="http://www.cs.sjtu.edu.cn/Management/Upload/[User]7e86b00895014d46bc6219bf3042d262/2013122511125989nUY8y.jpg" alt="...">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">Media heading</h4>
+                                百日一闪饥荒何日还留
+                                与穷潜力目
+                                更上一层楼
+                                处和日当无
+                                汗地喝下图
+                            </div>
+                        </li>
+                    </ul>
+                    <div>
+                        <input type="text" class="form-control" id="comment-score">
+                        <textarea class="form-control" rows="3" id="comment-text"></textarea>
+                        <button class="btn btn-default" id="btn-comment" type="submit" onclick="commitComment()">添加评价</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         <!--模态窗口 -->
         <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -105,6 +157,14 @@
             <li>
                 <label for="name">评分</label>
                 <input type="text" class="form-control text-input" id="score" placeholder="score">
+            </li>
+            <li>
+                <label for="name">图片</label>
+                <input type="text" class="form-control text-input" id="modal-img" placeholder="图片">
+            </li>
+            <li>
+                <label for="name">主页</label>
+                <input type="text" class="form-control text-input" id="modal-url" placeholder="主页">
             </li>
             <!-- <li>
             <label for="name">性别</label>
@@ -149,6 +209,7 @@
 
         var department = {};
         var school = {};
+        var teacher = {};
 
         // 请求并加载学院列表
         var loadSchool = function(){
@@ -210,16 +271,21 @@
                 teacherList = data;
                 var listModel = $("#teachertable");
                 listModel.children().remove();
-                listModel.append("<tr><td>id</td><td>姓名</td><td>职称</td><td>评分</td></tr>");
+                listModel.append("<tr><td>id</td><td>姓名</td><td>职称</td><td>评分</td><td>操作</td></tr>");
                 for(var i=0; i<data.length; i++){
-                    listModel.append("<tr onclick='editTeacher(this)'><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].title + "</td><td>" + data[i].score + "</td></tr>");
+                    listModel.append("<tr onclick='showTeacherInfo(this)'><td>" + data[i].id + "</td><td>" + data[i].name + "</td><td>" + data[i].title + "</td><td>" + data[i].score + "</td><td onclick='editTeacher(this)'><a href='#'>修改</a></td></tr>");
                 }
             });
+
+            $("#teachertable").show();
+            $("#edit-teacher-button").show();
+            $("#teacher-info-wall").hide();
+
         }
 
         var editTeacher = function(obj){
             // 获取teacherId
-            var tds= $(obj).find('td');
+            var tds= $(obj).parent().find('td');
             var teacherId = tds.eq(0).text();
             var teacher = getTeacherById(teacherId);
 
@@ -228,14 +294,39 @@
                 $("#title").val("");
                 $("#score").val("");
                 $("#id").val("");
+                $("#modal-img").val("");
+                $("#modal-url").val("");
             }else{
                 $("#name").val(teacher.name);
                 $("#title").val(teacher.title);
                 $("#score").val(teacher.score);
                 $("#id").val(teacher.id);
+                $("#modal-img").val(teacher.img);
+                $("#modal-url").val(teacher.url);
             }
 
             $('#modal').modal('show');
+        }
+
+        var showTeacherInfo = function(obj){
+            // 获取teacherId
+            var tds= $(obj).find('td');
+            var teacherId = tds.eq(0).text();
+            teacher = getTeacherById(teacherId);
+
+            $("#main-pic").attr("src", teacher.img);
+            $("#teacher-department").text(teacher.departmentid);
+            $("#teacher-url").attr("href", teacher.url);
+            $("#teacher-url").text(teacher.url);
+            $("#teacher-name").text(teacher.name);
+
+            loadComment();
+            // 隐藏teacher列表
+            $("#teachertable").hide();
+            $("#edit-teacher-button").hide();
+
+            $("#teacher-info-wall").show();
+
         }
 
         var getTeacherById = function(teacherId){
@@ -255,8 +346,11 @@
             teacher.title = $('#title').val();
             teacher.id = $('#id').val();
             teacher.score = $("#score").val();
+            teacher.img = $("#modal-img").val();
+            teacher.url = $("#modal-url").val();
+            alert(teacher.img);
             $.post("teacher/update.do", teacher, function(data, status){
-                listTeacher();
+                    listTeacher();
             });
         }
 
@@ -273,9 +367,47 @@
             teacher.name = $('#name').val();
             teacher.score = $("#score").val();
             teacher.title = $("#title").val();
+            teacher.img = $("#modal-img").val();
+            teacher.url = $("#modal-url").val();
             teacher.departmentid = department.id;
             $.post("teacher/insert.do", teacher, function(data, status){
                 listTeacher();
+            });
+        }
+
+        var commitComment = function(){
+            var score = $("#comment-score").val();
+            var comment = $("#comment-text").val();
+
+            if(score == "" || comment == "") return;
+
+            $.post("comment/insert.do", {score:score, content:comment, userId:1, teacherId:teacher.id});
+
+            loadComment();
+
+            score = $("#comment-score").val("");
+            comment = $("#comment-text").val("");
+        }
+
+        var createComment = function(comment){
+            return (
+            "<li class='media' style='padding:10px;border-bottom-style: solid;border-bottom-width: thin;border-bottom-color:lightgray'>" +
+            "<div class='media-left'>" +
+            "<a href='#'>" +
+            "<img class='media-object' width='64px' heigth='64px' src=" + comment.url +"'>" +
+            "</a></div><div class='media-body'>" +
+            "<h4 class='media-heading'>评分： " +comment.score+ "</h4>" + comment.content +
+            "</div></li>");
+        }
+
+        var loadComment = function(){
+            // 请求评论
+            var commentList = $("#comment-list");
+            commentList.children().remove();
+            $.get("comment/list.do?teacherId=" + teacher.id, function(data, status){
+                for(var i=0; i<data.length; i++){
+                    commentList.append(createComment(data[i]));
+                }
             });
         }
 

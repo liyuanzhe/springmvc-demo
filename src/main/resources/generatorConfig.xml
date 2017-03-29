@@ -46,5 +46,14 @@
         <table schema="DB2ADMIN" tableName="tb_teacher" domainObjectName="Teacher" >
             <generatedKey column="id" sqlStatement="JDBC" identity="true" />
         </table>
+        <table schema="DB2ADMIN" tableName="tb_user" domainObjectName="User" >
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+        </table>
+        <table schema="DB2ADMIN" tableName="tb_comment" domainObjectName="Comment" >
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+        </table>
+        <table schema="DB2ADMIN" tableName="tb_agree" domainObjectName="Agree" >
+            <generatedKey column="id" sqlStatement="JDBC" identity="true" />
+        </table>
     </context>
 </generatorConfiguration>
