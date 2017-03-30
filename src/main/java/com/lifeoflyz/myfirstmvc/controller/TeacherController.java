@@ -50,4 +50,5 @@ public class TeacherController {
     public void delete(Integer id){
         teacherService.delete(id);
     }
+
 }
