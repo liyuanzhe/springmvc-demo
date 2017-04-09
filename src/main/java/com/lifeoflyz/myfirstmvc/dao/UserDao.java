@@ -36,4 +36,11 @@ public class UserDao {
     public void update(User user){
         userMapper.updateByPrimaryKeySelective(user);
     }
+
+    public void updateByEmail(User user){
+        UserExample example = new UserExample();
+        example.or().andEmailEqualTo(user.getEmail());
+        userMapper.updateByExampleSelective(user, example);
+    }
+
 }

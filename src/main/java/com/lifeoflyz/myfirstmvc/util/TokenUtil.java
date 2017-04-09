@@ -1,16 +1,11 @@
-package com.lifeoflyz.myfirstmvc.service.impl;
-
-import com.lifeoflyz.myfirstmvc.util.Md5Generator;
-
-import org.springframework.stereotype.Service;
+package com.lifeoflyz.myfirstmvc.util;
 
 /**
  * Created by liyuanzhe on 17-3-30.
  */
-@Service
-public class TokenServiceImpl {
+public class TokenUtil {
 
-    public String generateToken(String source){
+    public static String generateToken(String source){
         String md = Md5Generator.generate(source);
         String uuid = java.util.UUID.randomUUID().toString().replaceAll("-","");
         return md + uuid;
@@ -18,7 +13,7 @@ public class TokenServiceImpl {
 
     public static void main(String[] args){
         System.out.println(
-                new TokenServiceImpl().generateToken("23")
+                new TokenUtil().generateToken("23")
         );
     }
 }
