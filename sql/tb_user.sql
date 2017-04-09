@@ -16,28 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_school`
+-- Table structure for table `tb_user`
 --
 
-DROP TABLE IF EXISTS `tb_school`;
+DROP TABLE IF EXISTS `tb_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_school` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `short_name` varchar(50) NOT NULL,
+CREATE TABLE `tb_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `code` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `token` varchar(200) DEFAULT NULL,
+  `token_updated_at` datetime DEFAULT NULL,
+  `code_updated_at` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tb_school`
+-- Dumping data for table `tb_user`
 --
 
-LOCK TABLES `tb_school` WRITE;
-/*!40000 ALTER TABLE `tb_school` DISABLE KEYS */;
-INSERT INTO `tb_school` VALUES (1,'电子信息与电气工程学院','电信学院'),(2,'安泰经管学院','安泰学院'),(3,'机械与动力工程学院','机动学院'),(4,'人文学院','人文学院');
-/*!40000 ALTER TABLE `tb_school` ENABLE KEYS */;
+LOCK TABLES `tb_user` WRITE;
+/*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
+INSERT INTO `tb_user` VALUES (1,'李源哲','000','lee@sjtu.edu.cn','8dad2685f02e934aa80b27e223a5876f9d9df768c7ae42f9a23ba87b8e8d67b7','2017-03-30 20:51:12',NULL),(2,'阿哲',NULL,'a@sjtu.edu.cn','bab1fa231d6fb21ca7489d1b1be44f8ed347b75e66b04eb589fc844445733664','2017-03-30 20:55:52',NULL);
+/*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-09 22:35:31
+-- Dump completed on 2017-04-09 22:35:49
