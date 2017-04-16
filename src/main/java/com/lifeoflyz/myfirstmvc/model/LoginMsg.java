@@ -17,7 +17,7 @@ public class LoginMsg {
     private String name;
 
     public boolean isEmpty(){
-        if(StringUtils.isEmpty(email) || StringUtils.isEmpty(code))
+        if(StringUtils.isEmpty(email))
             return true;
         else
             return false;

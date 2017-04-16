@@ -6,14 +6,12 @@ import com.lifeoflyz.myfirstmvc.mail.MailSender;
 import com.lifeoflyz.myfirstmvc.mail.MainUtil;
 import com.lifeoflyz.myfirstmvc.model.LoginMsg;
 import com.lifeoflyz.myfirstmvc.model.gen.User;
-import com.lifeoflyz.myfirstmvc.util.TokenUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.mail.MessagingException;
@@ -23,6 +21,8 @@ import javax.mail.MessagingException;
  */
 @Service
 public class LoginServiceImpl {
+
+    private static final int TOKEN_AGE = 60 * 1000;
 
     @Autowired
     UserDao userDao;
@@ -56,6 +56,21 @@ public class LoginServiceImpl {
        }
     }
 
+    public boolean checkToken(String email, String token){
+
+        User user = userDao.getByEmail(email);
+
+        if(user == null || !token.equals(user.getToken()))
+            return false;
+
+        if((new Date().getTime() - user.getTokenUpdatedAt().getTime()) > TOKEN_AGE)
+            return false;
+
+        // 验证通过，更新token时间
+        user.setTokenUpdatedAt(new Date());
+        userDao.updateByEmail(user);
+        return true;
+    }
 
     /**
      * 生成验证码并发送邮件
@@ -73,14 +88,20 @@ public class LoginServiceImpl {
         userService.refreshCode(loginMsg.getEmail(), code);
     }
 
+    /**
+     * 确认验证码
+     * @param loginMsg
+     * @return
+     * @throws ParseException
+     */
     public boolean checkCode(LoginMsg loginMsg) throws ParseException {
+
         User user = userDao.getByEmail(loginMsg.getEmail());
         if(user == null || user.getCode() == null || user.getCodeUpdatedAt() == null) return false;
 
         // 验证码失效
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        Date codeGeneratedTtime = sdf.parse(user.getCodeUpdatedAt());
-        if(new Date().compareTo(codeGeneratedTtime) > 60*1000){
+        Date codeGeneratedTtime = user.getCodeUpdatedAt();
+        if(new Date().getTime() > codeGeneratedTtime.getTime() +  60*1000){
             return false;
         }
 

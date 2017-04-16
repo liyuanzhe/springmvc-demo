@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.ParseException;
+
 /**
  * Created by liyuanzhe on 17-3-30.
  */
@@ -20,8 +22,8 @@ public class LoginServiceTest {
     LoginServiceImpl loginService;
 
     @Test
-    public void testLogin(){
-        LoginMsg loginMsg = new LoginMsg("a@sjtu.edu.cn", "code", "阿哲" );
+    public void testLogin() throws ParseException {
+        LoginMsg loginMsg = new LoginMsg("lee@sjtu.edu.cn", "4052", "阿哲" );
         loginService.login(loginMsg);
     }
 

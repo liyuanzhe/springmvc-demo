@@ -15,6 +15,8 @@ import javax.mail.internet.MimeMessage;
  */
 public class MailSender {
 
+    private static final String MAIL_PASSWORD = "";
+
     public static void send(Mail mail) throws MessagingException {
         Properties props = new Properties();
         // 开启debug调试
@@ -33,13 +35,13 @@ public class MailSender {
         Message msg = new MimeMessage(session);
         msg.setSubject("JavaMail测试");
         // 设置邮件内容
-        msg.setText("这是一封由JavaMail发送的邮件！");
+        msg.setText(mail.getContent());
         // 设置发件人
         msg.setFrom(new InternetAddress("superyuanzhe@126.com"));
 
         Transport transport = session.getTransport();
         // 连接邮件服务器
-        transport.connect("superyuanzhe", "");
+        transport.connect("superyuanzhe", MAIL_PASSWORD);
         // 发送邮件
         transport.sendMessage(msg, new Address[] {new InternetAddress("lee@sjtu.edu.cn")});
         // 关闭连接

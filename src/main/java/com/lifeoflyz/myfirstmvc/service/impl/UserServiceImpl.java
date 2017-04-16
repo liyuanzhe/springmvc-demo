@@ -36,7 +36,7 @@ public class UserServiceImpl {
             User user = new User();
             user.setEmail(email);
             user.setCode(code);
-            user.setCodeUpdatedAt(new Date().toString());
+            user.setCodeUpdatedAt(new Date());
             userDao.updateByEmail(user);
         }
     }
@@ -45,7 +45,7 @@ public class UserServiceImpl {
         User user = new User();
         user.setEmail(email);
         user.setCode(code);
-        user.setCodeUpdatedAt(new Date().toString());
+        user.setCodeUpdatedAt(new Date());
         userDao.insert(user);
     }
 
@@ -63,4 +63,6 @@ public class UserServiceImpl {
         userDao.updateByEmail(user);
         return token;
     }
+
+
 }

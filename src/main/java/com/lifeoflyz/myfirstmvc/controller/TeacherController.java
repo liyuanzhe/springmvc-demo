@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by liyuanzhe on 17-3-28.
  */
@@ -47,7 +49,8 @@ public class TeacherController {
 
     @RequestMapping(value="delete.do", method= RequestMethod.GET)
     @ResponseBody
-    public void delete(Integer id){
+    public void delete(HttpServletRequest request, Integer id){
+        request.getCookies();
         teacherService.delete(id);
     }
 

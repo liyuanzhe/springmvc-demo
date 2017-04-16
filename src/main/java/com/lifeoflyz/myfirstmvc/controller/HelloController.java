@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Created by liyuanzhe on 16-12-11.
  */
@@ -66,5 +70,24 @@ public class HelloController {
         return gson.toJson(tableList);
     }
 
+    @RequestMapping(value="cookie.do" ,produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String cookie(HttpServletRequest request, HttpServletResponse response){
+
+        Cookie[] cookies = request.getCookies();
+        if (null==cookies) {
+            System.out.println("没有cookie=========");
+        } else {
+            for(Cookie cookie : cookies){
+                System.out.println("name:"+cookie.getName()+",value:"+ cookie.getValue());
+            }
+        }
+
+        Cookie cookie = new Cookie("test", "value");
+        cookie.setMaxAge(60);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return gson.toJson("");
+    }
 
 }
